@@ -79,9 +79,10 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
+    public TEntity Get(Expression<Func<TEntity, bool>> predicate)
     {
-        return Context.Set<TEntity>().FirstOrDefault(predicate);
+        // TODO: WARNING
+        return Context.Set<TEntity>().FirstOrDefault(predicate)!;
     }
 
     public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
