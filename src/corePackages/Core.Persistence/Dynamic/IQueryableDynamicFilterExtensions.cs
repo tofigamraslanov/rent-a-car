@@ -46,7 +46,7 @@ public static class IQueryableDynamicFilterExtensions
     {
         if (sort.Any())
         {
-            string ordering = string.Join(",", sort.Select(s => $"{s.Field} {s.Dir}"));
+            string ordering = string.Join(",", sort.Select(s => $"{s.Field} {s.Direction}"));
             return queryable.OrderBy(ordering);
         }
 

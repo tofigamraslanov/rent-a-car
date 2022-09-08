@@ -13,16 +13,16 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBrandCommand command)
         {
-            CreatedBrandDto response = await Mediator?.Send(command)!;
-            return Created("", response);
+            CreatedBrandDto createdBrandDto = await Mediator?.Send(command)!;
+            return Created("", createdBrandDto);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
-            GetListBrandQuery getListBrandQuery = new() { PageRequest = pageRequest };
-            BrandListModel brandListModel = await Mediator?.Send(getListBrandQuery)!;
-            return Ok(brandListModel);
+            GetListBrandQuery query = new() { PageRequest = pageRequest };
+            BrandListModel brands = await Mediator?.Send(query)!;
+            return Ok(brands);
         }
 
         [HttpGet("{Id}")]

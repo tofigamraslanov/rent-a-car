@@ -13,26 +13,26 @@ public class GetByIdBrandQuery : IRequest<BrandGetByIdDto>
 
     public class GetBrandByIdQueryHandler : IRequestHandler<GetByIdBrandQuery, BrandGetByIdDto>
     {
-        private readonly IBrandRepository _brandRepository;
+        private readonly IBrandRepository _repository;
         private readonly IMapper _mapper;
-        private readonly BrandBusinessRules _brandBusinessRules;
+        private readonly BrandBusinessRules _businessRules;
 
-        public GetBrandByIdQueryHandler(IBrandRepository brandRepository, IMapper mapper,
-            BrandBusinessRules brandBusinessRules)
+        public GetBrandByIdQueryHandler(IBrandRepository repository, IMapper mapper,
+            BrandBusinessRules businessRules)
         {
-            _brandRepository = brandRepository;
+            _repository = repository;
             _mapper = mapper;
-            _brandBusinessRules = brandBusinessRules;
+            _businessRules = businessRules;
         }
 
         public async Task<BrandGetByIdDto> Handle(GetByIdBrandQuery request, CancellationToken cancellationToken)
         {
-            Brand? brand = await _brandRepository.GetAsync(b => b.Id == request.Id);
+            Brand? brand = await _repository.GetAsync(b => b.Id == request.Id);
 
-            _brandBusinessRules.BrandShouldExistWhenRequested(brand);
+            _businessRules.BrandShouldExistWhenRequested(brand);
 
-            BrandGetByIdDto brandGetByIdDto = _mapper.Map<BrandGetByIdDto>(brand);
-            return brandGetByIdDto;
+            BrandGetByIdDto mappedBrand = _mapper.Map<BrandGetByIdDto>(brand);
+            return mappedBrand;
         }
     }
 }

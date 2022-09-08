@@ -12,6 +12,14 @@
       <Folder Include="Features\Brands\Models\" />
       <Folder Include="Features\Brands\Rules\" />
       <Folder Include="Features\Brands\Profiles\" />
+      <Folder Include="Features\Models\Commands\CreateModel\" />
+      <Folder Include="Features\Models\Profiles\" />
+      <Folder Include="Features\Models\Constants\" />
+      <Folder Include="Features\Models\Models\" />
+      <Folder Include="Features\Models\Queries\GetListModel\" />
+      <Folder Include="Features\Models\Queries\GetListModelByDynamic\" />
+      <Folder Include="Features\Models\Rules\" />
+      <Folder Include="Features\Models\Dtos\" />
       <Folder Include="Services\Repositories\" />
     </ItemGroup>
 

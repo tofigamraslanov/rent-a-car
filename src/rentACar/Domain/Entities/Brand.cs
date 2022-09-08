@@ -6,8 +6,11 @@ public class Brand : Entity
 {
     public string Name { get; set; } = null!;
 
+    public virtual ICollection<Model> Models { get; set; }
+
     public Brand()
     {
+        Models = new HashSet<Model>();
     }
 
     public Brand(int id, string name) : this()

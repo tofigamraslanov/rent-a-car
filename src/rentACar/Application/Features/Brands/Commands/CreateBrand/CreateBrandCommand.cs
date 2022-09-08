@@ -13,24 +13,24 @@ public class CreateBrandCommand : IRequest<CreatedBrandDto>
 
     public class CreateCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandDto>
     {
-        private readonly IBrandRepository _brandRepository;
+        private readonly IBrandRepository _repository;
         private readonly IMapper _mapper;
-        private readonly BrandBusinessRules _brandBusinessRules;
+        private readonly BrandBusinessRules _businessRules;
 
-        public CreateCommandHandler(IBrandRepository brandRepository, IMapper mapper,
-            BrandBusinessRules brandBusinessRules)
+        public CreateCommandHandler(IBrandRepository repository, IMapper mapper,
+            BrandBusinessRules businessRules)
         {
-            _brandRepository = brandRepository;
+            _repository = repository;
             _mapper = mapper;
-            _brandBusinessRules = brandBusinessRules;
+            _businessRules = businessRules;
         }
 
         public async Task<CreatedBrandDto> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {
-            await _brandBusinessRules.BrandNameCanNotBeDuplicatedWhenInserted(request.Name);
+            await _businessRules.BrandNameCanNotBeDuplicatedWhenInserted(request.Name);
 
             Brand mappedBrand = _mapper.Map<Brand>(request);
-            Brand createdBrand = await _brandRepository.AddAsync(mappedBrand);
+            Brand createdBrand = await _repository.AddAsync(mappedBrand);
             CreatedBrandDto createdBrandDto = _mapper.Map<CreatedBrandDto>(createdBrand);
 
             return createdBrandDto;

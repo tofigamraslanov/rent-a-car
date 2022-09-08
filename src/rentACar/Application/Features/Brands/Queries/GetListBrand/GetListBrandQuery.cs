@@ -14,23 +14,22 @@ public class GetListBrandQuery : IRequest<BrandListModel>
 
     public class GetListBrandQueryHandler : IRequestHandler<GetListBrandQuery, BrandListModel>
     {
-        private readonly IBrandRepository _brandRepository;
+        private readonly IBrandRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetListBrandQueryHandler(IBrandRepository brandRepository, IMapper mapper)
+        public GetListBrandQueryHandler(IBrandRepository repository, IMapper mapper)
         {
-            _brandRepository = brandRepository;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<BrandListModel> Handle(GetListBrandQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<Brand> brands = await _brandRepository.GetListAsync(index: request.PageRequest.Page,
+            IPaginate<Brand> brands = await _repository.GetListAsync(index: request.PageRequest.Page,
                 size: request.PageRequest.PageSize, cancellationToken: cancellationToken);
 
-            BrandListModel mappedBrandListModel = _mapper.Map<BrandListModel>(brands);
-
-            return mappedBrandListModel;
+            BrandListModel mappedBrands = _mapper.Map<BrandListModel>(brands);
+            return mappedBrands;
         }
     }
 }
